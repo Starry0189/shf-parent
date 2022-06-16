@@ -28,4 +28,20 @@ public class RoleServiceImpl implements RoleService {
         Integer count = roleDao.insert(role);
         return count;
     }
+
+    @Override
+    public Role getById(Long id) {
+        Role role = roleDao.getById(id);
+        return role;
+    }
+
+    @Override
+    public Integer update(Role role) {
+        return roleDao.update(role);
+    }
+
+    @Override
+    public void delete(Long id) {
+        roleDao.delete(id);
+    }
 }

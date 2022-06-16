@@ -14,4 +14,10 @@ public interface RoleDao {
     List<Role> findAll();
 
     Integer insert(Role role);
+
+    Role getById(Long id);
+
+    Integer update(Role role);
+
+    void delete(Long id);
 }

@@ -20,4 +20,35 @@
         from acl_role where is_deleted = 0
     </select>
 
+    <!--通过ID查询角色-->
+    <select id="getById" resultType="role">
+        <include refid="column"></include>
+        from acl_role where id = #{id}
+    </select>
+
+    <!--修改角色信息-->
+    <update id="update">
+        update acl_role set
+        <if test="roleName != null and roleName != ''">
+            role_Name = #{roleName},
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+            role_Code = #{roleCode},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!--删除角色信息-->
+    <update id="delete">
+        update acl_role set
+	        update_time = now() ,
+	        is_deleted = 1
+        where
+        	id = #{id}
+</update>
+
 </mapper>

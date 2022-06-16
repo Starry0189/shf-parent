@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,8 +21,30 @@ public class RoleController {
     private static final String PAGE_INDEX = "role/index";
     private static final String PAGE_CREATE = "role/create";
     private static final String PAGE_SUCCESS = "common/successPage";
+    private static final String PAGE_EDIT = "role/edit";
+    private static final String LIST_ACTION = "redirect:/role";
+
     @Autowired
     private RoleService roleService;
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        roleService.delete(id);
+        return LIST_ACTION;
+    }
+
+    @PostMapping("/update")
+    public String update(Role role){
+        roleService.update(role);
+        return PAGE_SUCCESS;
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(ModelMap model, @PathVariable Long id){
+        Role role = roleService.getById(id);
+        model.addAttribute("role",role);
+        return PAGE_EDIT;
+    }
 
     @PostMapping("/save")
     public String save(Role role, Model model){
