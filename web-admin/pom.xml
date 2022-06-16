@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
 <!--     测试gitee       <groupId>com.atguigu</groupId>-->
-            <!-- 哈哈哈哈  -->
+            <!-- 哈哈哈哈 2222 -->
             <groupId>com.atguigu</groupId>
             <artifactId>common-util</artifactId>
             <version>1.0</version>
