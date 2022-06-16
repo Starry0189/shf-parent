@@ -14,6 +14,7 @@
 
     <dependencies>
         <dependency>
+<!--     测试gitee       <groupId>com.atguigu</groupId>-->
             <groupId>com.atguigu</groupId>
             <artifactId>common-util</artifactId>
             <version>1.0</version>
