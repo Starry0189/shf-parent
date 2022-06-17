@@ -1,14 +1,16 @@
 package com.atguigu.controller;
 
+import com.atguigu.base.BaseController;
 import com.atguigu.entity.Role;
 import com.atguigu.service.RoleService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author 孙消飞
@@ -16,11 +18,10 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/role")
-public class RoleController {
+public class RoleController extends BaseController {
 
     private static final String PAGE_INDEX = "role/index";
     private static final String PAGE_CREATE = "role/create";
-    private static final String PAGE_SUCCESS = "common/successPage";
     private static final String PAGE_EDIT = "role/edit";
     private static final String LIST_ACTION = "redirect:/role";
 
@@ -34,9 +35,9 @@ public class RoleController {
     }
 
     @PostMapping("/update")
-    public String update(Role role){
+    public String update(Role role,HttpServletRequest request){
         roleService.update(role);
-        return PAGE_SUCCESS;
+        return this.successPage("修改成功，哈哈哈",request);
     }
 
     @GetMapping("/edit/{id}")
@@ -47,10 +48,9 @@ public class RoleController {
     }
 
     @PostMapping("/save")
-    public String save(Role role, Model model){
+    public String save(Role role,HttpServletRequest request){
         roleService.insert(role);
-        model.addAttribute("messagePage","添加成功，哈哈哈");
-        return PAGE_SUCCESS;
+        return this.successPage("添加成功，哈哈哈",request);
     }
 
     @RequestMapping("/create")
@@ -58,10 +58,20 @@ public class RoleController {
         return PAGE_CREATE;
     }
 
+    /*
     @RequestMapping
     public String index(ModelMap model){
         List<Role> list = roleService.findAll();
         model.addAttribute("list",list);
+        return PAGE_INDEX;
+    }
+     */
+    @RequestMapping
+    public String index(ModelMap model, HttpServletRequest request) {
+        Map<String,Object> filters = getFilters(request);
+        PageInfo<Role> page = roleService.findPage(filters);
+        model.addAttribute("page",page);
+        model.addAttribute("filters",filters);
         return PAGE_INDEX;
     }
 }
